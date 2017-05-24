@@ -59,6 +59,26 @@
 
 <script>
 
+  window.addEventListener('keydown', function (e) {
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // Gets audio element
+      const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // Gets div surrounding key (for styles)
+
+      if (!audio) return; // Will stop function if there is no audio for keyCode
+
+      audio.currentTime = 0; // Rewind to the start on every keydown
+      audio.play(); // Plays audio if all goes well
+      key.classList.add('playing') // Add class to key (selected element). Similar to .addClass(class) in jQuery
+  });
+  
+  function removeTransition(e) {
+      this.classList.remove('playing'); // this = key
+  }
+
+  const keys = document.querySelectorAll('.key');
+  // Each key gets an eventListener added to it, waiting for its transition to end (See CSS to see how long transition is).
+  // Then it just removes transition.
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition)) // Avoid hard-coding everythind (CSS and shit)
+
 </script>
 
 
