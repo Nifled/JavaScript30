@@ -62,12 +62,41 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%; /* Put pivot point of rotation on the very right ahand side */
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
   <script>
+    const secHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    function setDate() {
+      const now = new Date();
+      const secs = now.getSeconds();
+      const mins = now.getMinutes();
+      const hours = now.getHours();
+
+
+      // 360 = Circle. Get seconds in minute on base 100 to get relative position.
+      // + 90 because we initially offset rotate 90 (see CSS).
+      const secsDegrees = ((secs / 60) * 360) + 90;
+      const minsDegrees = ((mins / 60) * 360) + 90;
+      const hoursDegrees = ((hours / 12) * 360 + 90);
+
+
+      secHand.style.transform = `rotate(${secsDegrees}deg)`; // Rotated second hand secDegrees
+      minHand.style.transform = `rotate(${minsDegrees}deg)`;
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+
+      if(secsDegrees === 360){  // To avoid the second hand from spinning back counter-clockwise to the 0 degree.
+          secHand.style.transition='none';
+      }
+    }
+    setInterval(setDate, 1000)
 
   </script>
 </body>
