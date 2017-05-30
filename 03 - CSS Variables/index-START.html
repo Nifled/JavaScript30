@@ -5,7 +5,7 @@
   <title>Scoped CSS Variables and JS</title>
 </head>
 <body>
-  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+  <h2>Update CSS Variables with <span class="h1">JS</span></h2>
 
   <div class="controls">
     <label for="spacing">Spacing:</label>
@@ -22,9 +22,21 @@
 
   <style>
 
-    /*
-      misc styles, nothing to do with CSS variables
-    */
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .h1 {
+      color: var(--base);
+    }
 
     body {
       text-align: center;
@@ -45,6 +57,21 @@
   </style>
 
   <script>
+
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate() {
+      // this.dataset returns object with all the data-* html attributes from a certain element.
+      // So in this case, if I got the 'spacing' input element's dataset, data-sizing would be in the object.
+      const suffix = this.dataset.sizing || ''; // color input elmenet has no sizing.
+
+      // Updates the CSS variable from :root with the value given + suffix (eg: px, or '' for color)
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate)); // For value change on range input
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate)); // For value change on range input when moving the range concurrently
+
   </script>
 
 </body>
