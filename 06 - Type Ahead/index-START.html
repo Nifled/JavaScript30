@@ -24,7 +24,11 @@
   // fetch(endpoint);
   fetch(endpoint)
     .then(blob => blob.json()) // blob.json itself returns another Promise
-    .then(data => cities.push(...data)); // ES6 spread (...) to avoid cities being nested arrays.
+
+    // ES6 spread (...) to avoid cities being nested arrays.
+    // Normally, if we just pushed data, the array would look like this: cities = [Array[1000],]
+    // Since there are 1000 cities in json, but with the spread, we get : cities = [city1, city2, ... city1000]
+    .then(data => cities.push(...data));
 
   function findMatches(word, cities) {
     return cities.filter(place => {
