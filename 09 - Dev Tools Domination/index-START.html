@@ -12,34 +12,73 @@
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
     function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
+       p.style.color = '#BADA55';
       p.style.fontSize = '50px';
     }
 
     // Regular
+    console.log('hello');
 
     // Interpolated
+    console.log('hello i am a %s string', '🤔');
 
     // Styled
+    console.log('%c i am some awesome text', 'font-size:50px');
 
     // warning!
+    console.warn('CAREFUL!');
 
     // Error :|
+    console.error('NOOOO ERRORRRRR!!!');
 
     // Info
+    console.info('Turtles are mostly gay');
 
     // Testing
+    const p = document.querySelector('p');
+
+    console.assert(p.classList.contains('ouch'), 'No ouch in <p>');
+    console.assert(1 === 2, 'WRONG!');
 
     // clearing
+    console.clear();
 
     // Viewing DOM Elements
+    console.log(p);
+    console.dir(p); // Open an element up and view all it's elements
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`);
+
+      // Starts getting messy with all the console.logs, so
+      // grouping them is better for reading. Displays them
+      // similar to foldable objects
+      console.log(`This is ${dog.name}.`);
+      console.log(`${dog.name} is ${dog.age} years old.`);
+      console.log(`${dog.name} is ${dog.age * 7} d{og years old.`);
+
+      console.groupEnd(`${dog.name}`);
+    });
 
     // counting
+    console.count('Erick');
+    console.count('Erick');
+    console.count('Jordi');
+    console.count('Erick');
+    console.count('Erick');
 
     // timing
+    console.time('fetching data'); // Start timer
+
+    fetch('https://api.github.com/users/nifled')
+      .then(data => data.json())
+      .then(data =>  {
+
+        console.timeEnd('fetching data'); // Time it to this point (data is recovered)
+
+        console.log(data);
+      });
 
   </script>
 </body>
