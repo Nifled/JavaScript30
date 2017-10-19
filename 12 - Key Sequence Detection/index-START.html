@@ -6,7 +6,23 @@
   <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
+
 <script>
+    const pressed = [];
+    const secretCode = 'erick';
+
+    window.addEventListener('keyup', (e) => {
+      pressed.push(e.key);
+      // Keep the size of `pressed` limited to length of `secretCode`,
+      // since I'm only going to check if they are the same.
+      // That way, I won't get a massive, huge `pressed` array if I input a lot.
+      pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+      if (pressed.join('').includes(secretCode)) {
+        cornify_add();
+      }
+      console.log(pressed);
+    });
 </script>
+
 </body>
 </html>
