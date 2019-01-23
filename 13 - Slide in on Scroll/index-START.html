@@ -43,6 +43,8 @@
   </div>
 
   <script>
+    // Run a checkSlide every `wait` seconds apart on eventListener
+    // instead of running it every time the eventListener is invoked
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -58,6 +60,28 @@
       };
     }
 
+    
+
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+    function checkSlide (e) {
+      sliderImages.forEach(sliderImage => {
+        // Start effect when 50% of image is on window screen
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        if (isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add('active');
+        } else {
+          sliderImage.classList.remove('active');
+        }
+      })
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide));
   </script>
 
   <style>
